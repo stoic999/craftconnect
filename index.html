@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CraftConnect - AI-Powered Artisan Marketplace</title>
+    <meta name="description" content="Empowering local artisans with cutting-edge AI technology to showcase and sell their handcrafted products online. Join the future of artisan commerce.">
+    <meta name="keywords" content="artisan marketplace, handmade crafts, AI marketplace, local artisans, handcrafted products">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #4a6741 100%);
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #4facfe;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --text-primary: #1a202c;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --text-light: #ffffff;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f7fafc;
+            --bg-tertiary: #edf2f7;
+            --bg-dark: #1a202c;
+            --border-light: #e2e8f0;
+            --border-medium: #cbd5e0;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            --transition-fast: all 0.15s ease;
+            --transition-normal: all 0.3s ease;
+            --transition-slow: all 0.5s ease;
+            --container-max-width: 1280px;
+            --header-height: 80px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-weight: 400;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .visually-hidden {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            padding: 0 !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
+            white-space: nowrap !important;
+            border: 0 !important;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition-normal);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: var(--text-light);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: var(--text-light);
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 1000;
+            transition: var(--transition-normal);
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            letter-spacing: -0.025em;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition-fast);
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-gradient);
+            transition: var(--transition-normal);
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-menu-btn span {
+            width: 20px;
+            height: 2px;
+            background: var(--text-primary);
+            transition: var(--transition-fast);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: var(--primary-gradient);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: var(--text-light);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-2xl);
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.025em;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-xl);
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: var(--header-height);
+        }
+
+        .section {
+            padding: 6rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--accent-gradient);
+            color: var(--text-light);
+            border-radius: var(--radius-2xl);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Products Section */
+        .products-section {
+            background: var(--bg-secondary);
+        }
+
+        .search-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 300px;
+            max-width: 400px;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            background: var(--bg-primary);
+            transition: var(--transition-fast);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--bg-primary);
+            padding: 0.5rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .filter-tab {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            white-space: nowrap;
+        }
+
+        .filter-tab.active {
+            background: var(--primary-gradient);
+            color: var(--text-light);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .filter-tab:not(.active):hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .product-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-normal);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-2xl);
+        }
+
+        .product-image-container {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-slow);
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-badges {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .product-badge {
+            padding: 0.375rem 0.75rem;
+            border-radius: var(--radius-2xl);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-ai {
+            background: var(--accent-gradient);
+            color: var(--text-light);
+        }
+
+        .badge-featured {
+            background: var(--secondary-gradient);
+            color: var(--text-light);
+        }
+
+        .product-content {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .product-description {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .product-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-medium);
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .btn-icon:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .feature-card {
+            padding: 2.5rem 2rem;
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
+            text-align: center;
+            transition: var(--transition-normal);
+            border: 1px solid var(--border-light);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary-color);
+        }
+
+        .feature-icon {
+            width: 4rem;
+            height: 4rem;
+            margin: 0 auto 1.5rem;
+            background: var(--primary-gradient);
+            border-radius: var(--radius-xl);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* About Section */
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-card {
+            background: var(--bg-secondary);
+            padding: 2.5rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-light);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: var(--bg-secondary);
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--bg-primary);
+            padding: 2.5rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1rem;
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-md);
+            transition: var(--transition-fast);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+        }
+
+        .btn-full-width {
+            width: 100%;
+        }
+
+        /* Loading States */
+        .loading-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 0;
+        }
+
+        .loading-spinner {
+            width: 3rem;
+            height: 3rem;
+            border: 3px solid var(--border-light);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Notification System */
+        .notification {
+            position: fixed;
+            top: calc(var(--header-height) + 1rem);
+            right: 1rem;
+            max-width: 400px;
+            padding: 1rem 1.5rem;
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-xl);
+            border-left: 4px solid var(--success-color);
+            z-index: 1001;
+            transform: translateX(100%);
+            opacity: 0;
+            transition: var(--transition-normal);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .notification-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .notification-message {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-dark);
+            color: var(--text-light);
+            padding: 3rem 0 2rem;
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-text {
+            opacity: 0.8;
+        }
+
+        /* Animations */
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(2rem);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            .nav-menu {
+                display: none;
+            }
+            .mobile-menu-btn {
+                display: flex;
+            }
+            .hero-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+                padding: 1.5rem;
+            }
+            .section {
+                padding: 4rem 0;
+            }
+            .search-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-input {
+                min-width: auto;
+                max-width: none;
+            }
+            .filter-tabs {
+                justify-content: center;
+                overflow-x: auto;
+                padding: 0.5rem;
+            }
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .notification {
+                left: 1rem;
+                right: 1rem;
+                max-width: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            .section-title {
+                font-size: 1.75rem;
+            }
+            .feature-card {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        /* Performance Optimizations */
+        .products-grid img {
+            content-visibility: auto;
+            contain-intrinsic-size: 320px 240px;
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus states */
+        .btn:focus-visible,
+        .nav-link:focus-visible,
+        .search-input:focus-visible,
+        .filter-tab:focus-visible {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header" id="header" role="banner">
+        <div class="container">
+            <nav class="header-nav" role="navigation" aria-label="Main navigation">
+                <a href="#" class="logo" aria-label="CraftConnect Home">CraftConnect</a>
+                <ul class="nav-menu">
+                    <li><a href="#products" class="nav-link">Products</a></li>
+                    <li><a href="#features" class="nav-link">Features</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                    <li><a href="#join" class="btn btn-primary">Join Now</a></li>
+                </ul>
+                <button class="mobile-menu-btn" aria-label="Toggle mobile menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content" role="main">
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <span>🚀</span>
+                        <span>Powered by Advanced AI Technology</span>
+                    </div>
+                    <h1 class="hero-title">Empowering Artisans with <span style="background: linear-gradient(45deg, #4facfe, #00f2fe); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">AI Innovation</span></h1>
+                    <p class="hero-subtitle">Transform your craft into a thriving online business with our cutting-edge AI marketplace platform designed specifically for local artisans.</p>
+                    <div class="hero-actions">
+                        <a href="#products" class="btn btn-primary">Explore Marketplace</a>
+                        <a href="#features" class="btn btn-secondary">Learn More</a>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-number">10,000+</span>
+                            <span class="stat-label">Active Artisans</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">50,000+</span>
+                            <span class="stat-label">Products Sold</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">95%</span>
+                            <span class="stat-label">Satisfaction Rate</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">24/7</span>
+                            <span class="stat-label">AI Support</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section products-section" id="products">
+            <div class="container">
+                <header class="section-header">
+                    <div class="section-badge">Featured Collection</div>
+                    <h2 class="section-title">Discover Exceptional Handcrafted Products</h2>
+                    <p class="section-subtitle">Browse our curated selection of premium artisan creations, each piece enhanced with AI-powered insights and optimized for your perfect shopping experience.</p>
+                </header>
+                <div class="search-controls">
+                    <input type="search" class="search-input" id="searchInput" placeholder="Search for unique handcrafted items..." aria-label="Search products">
+                    <div class="filter-tabs" role="tablist" aria-label="Product categories">
+                        <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true" aria-controls="products-grid">All Products</button>
+                        <button class="filter-tab" data-filter="ceramic" role="tab" aria-selected="false" aria-controls="products-grid">Ceramics</button>
+                        <button class="filter-tab" data-filter="textile" role="tab" aria-selected="false" aria-controls="products-grid">Textiles</button>
+                        <button class="filter-tab" data-filter="leather" role="tab" aria-selected="false" aria-controls="products-grid">Leather</button>
+                        <button class="filter-tab" data-filter="bath" role="tab" aria-selected="false" aria-controls="products-grid">Bath & Body</button>
+                    </div>
+                </div>
+                <div class="loading-container" id="loadingContainer">
+                    <div class="loading-spinner" role="status" aria-label="Loading products"></div>
+                </div>
+                <div class="products-grid" id="productsGrid" role="tabpanel" aria-live="polite"></div>
+            </div>
+        </section>
+
+        <section class="section" id="features">
+            <div class="container">
+                <header class="section-header">
+                    <div class="section-badge">AI Technology</div>
+                    <h2 class="section-title">Revolutionary Features for Modern Artisans</h2>
+                    <p class="section-subtitle">Experience the future of artisan commerce with our advanced AI-powered tools designed to maximize your creative potential and business success.</p>
+                </header>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🧠</div>
+                        <h3 class="feature-title">AI Product Descriptions</h3>
+                        <p class="feature-description">Transform your product photos into compelling, SEO-optimized descriptions that capture your craft's unique story and drive sales conversions.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">👓</div>
+                        <h3 class="feature-title">Virtual Try-On Technology</h3>
+                        <p class="feature-description">Revolutionary AR technology allows customers to visualize jewelry, accessories, and clothing items before purchase, reducing returns by 60%.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📈</div>
+                        <h3 class="feature-title">Smart Demand Forecasting</h3>
+                        <p class="feature-description">AI-driven market analysis provides real-time insights on trending products, seasonal demands, and optimal pricing strategies for maximum profitability.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3 class="feature-title">Personalized Marketing</h3>
+                        <p class="feature-description">Automated marketing campaigns tailored to your audience, utilizing machine learning to optimize reach and engagement across all channels.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💬</div>
+                        <h3 class="feature-title">AI Customer Support</h3>
+                        <p class="feature-description">24/7 intelligent chatbot handles customer inquiries, order tracking, and product recommendations, ensuring exceptional customer service.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3 class="feature-title">Advanced Analytics</h3>
+                        <p class="feature-description">Comprehensive business intelligence dashboard with actionable insights, performance metrics, and growth recommendations powered by AI.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="about">
+            <div class="container">
+                <header class="section-header">
+                    <div class="section-badge">Our Story</div>
+                    <h2 class="section-title">Connecting Artisans with the World</h2>
+                    <p class="section-subtitle">CraftConnect was born from a passion for traditional craftsmanship and a vision for a more connected future. We believe that technology should empower creativity, not replace it.</p>
+                </header>
+                <div class="about-content">
+                    <div class="about-card">
+                        <p>Our mission is to bridge the gap between local artisans and a global audience. By providing powerful AI tools, we help craftspeople overcome common business challenges, from writing product descriptions to understanding market trends. We're more than a marketplace; we're a partner in preserving and promoting the art of handcrafting.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section contact-section" id="contact">
+            <div class="container">
+                <header class="section-header">
+                    <div class="section-badge">Get in Touch</div>
+                    <h2 class="section-title">Contact Us</h2>
+                    <p class="section-subtitle">Have a question? We'd love to hear from you. Fill out the form below or reach out to us directly.</p>
+                </header>
+                <form class="contact-form" id="contactForm" action="#" method="POST">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full-width">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <p class="footer-text">&copy; 2025 CraftConnect. All rights reserved. Empowering artisans through innovative AI technology.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        class CraftConnectApp {
+            constructor() {
+                this.products = [
+                    {
+                        id: 1,
+                        name: "Handwoven Muga Silk",
+                        image: "https://i.pinimg.com/originals/fe/66/db/fe66dbc62637b2cfe607944917f681d4.jpg",
+                        description: "Exquisite handwoven Muga silk saree in a warm golden hue, adorned with delicate red and black motifs across the body. The intricately patterned red pallu and borders showcase traditional Assamese craftsmanship, blending timeless heritage with refined elegance.",
+                        price: 249.00,
+                        category: "textile",
+                        aiGenerated: true,
+                        rating: 4.8,
+                        reviews: 127,
+                        featured: true,
+                        artisan: "L Piyojit Singha"
+                    },
+                    {
+                        id: 2,
+                        name: "Handcrafted Bamboo Home Decor Set",
+                        image: "https://3.imimg.com/data3/MN/HB/MY-11487458/bamboo-handicrafts-home-decorative-items-500x500.jpg",
+                        description: "A collection of handwoven bamboo baskets, lampshades, and decor accents, crafted with precision by skilled artisans. The natural golden finish highlights the strength and flexibility of bamboo, bringing an earthy elegance to your home while supporting sustainable craftsmanship.",
+                        price: 99.00,
+                        category: "textile",
+                        aiGenerated: true,
+                        rating: 4.9,
+                        reviews: 89,
+                        featured: true,
+                        artisan: "Gaurav Dowerah"
+                    },
+                    {
+                        id: 3,
+                        name: "Handcrafted Leather Journal",
+                        image: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=400&h=300&fit=crop&auto=format&q=80",
+                        description: "Premium full-grain leather journal with hand-stitched binding and aged brass hardware. Features 200 pages of acid-free paper perfect for writing, sketching, or planning.",
+                        price: 19.00,
+                        category: "leather",
+                        aiGenerated: false,
+                        rating: 4.7,
+                        reviews: 156,
+                        featured: true,
+                        artisan: "Gyaneshwar Narzery"
+                    },
+                    {
+                        id: 4,
+                        name: "Organic Botanical Bodywash Collection",
+                        image: "https://m.media-amazon.com/images/I/61z3Csx8QoL._UF1000,1000_QL80_.jpg",
+                        description: "Luxurious handcrafted body wash made with organic shea butter, essential oils, and botanical extracts. Each bar is carefully cured for 6 weeks to ensure optimal quality and longevity.",
+                        price: 49.00,
+                        category: "bath",
+                        aiGenerated: true,
+                        rating: 4.6,
+                        reviews: 203,
+                        featured: false,
+                        artisan: "Arnab Subba Co."
+                    },
+                    {
+                        id: 5,
+                        name: "Terracotta & Jaipur Blue Pottery Collection",
+                        image: "https://abirpothi.com/wp-content/uploads/2023/04/WhatsApp-Image-2022-01-21-at-17.34.23.jpeg",
+                        description: "A stunning collection of handcrafted terracotta and Jaipur blue pottery, featuring intricate floral and peacock motifs in vibrant cobalt blue, green, and white. Each piece is hand-painted with natural pigments, showcasing the fusion of West Bengal's earthy terracotta tradition with Jaipur's signature blue pottery artistry.",
+                        price: 899.00,
+                        category: "ceramic",
+                        aiGenerated: true,
+                        rating: 4.9,
+                        reviews: 94,
+                        featured: true,
+                        artisan: "Saharia Al Mubarak"
+                    },
+                    {
+                        id: 6,
+                        name: "Natural Cotton Macrame Plant Hanger",
+                        image: "https://i.etsystatic.com/14231417/r/il/b1d2bb/1554017429/il_570xN.1554017429_jsvx.jpg",
+                        description: "Handknotted macrame plant hanger crafted from 100% natural cotton cord. Features adjustable height and can accommodate various pot sizes up to 10 inches in diameter.",
+                        price: 39.00,
+                        category: "textile",
+                        aiGenerated: false,
+                        rating: 4.8,
+                        reviews: 167,
+                        featured: false,
+                        artisan: "Digandu Co."
+                    },
+                    {
+                        id: 7,
+                        name: "Vintage-Style Leather Wallet",
+                        image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=300&fit=crop&auto=format&q=80",
+                        description: "Handcrafted bifold wallet made from premium vegetable-tanned leather. Features multiple card slots, bill compartments, and develops a beautiful patina with age.",
+                        price: 68.00,
+                        category: "leather",
+                        aiGenerated: true,
+                        rating: 4.9,
+                        reviews: 145,
+                        featured: true,
+                        artisan: "Craftsman Leather Co."
+                    },
+                    {
+                        id: 8,
+                        name: "Kama Ayurveda Red Sandalwood Soap",
+                        image: "https://imgmedia.lbb.in/media/2020/12/5fdb8420bbc185481aab7533_1608221728346.jpg",
+                        description: "This luxurious soap from Kama Ayurveda is crafted with pure red sandalwood oil, known for its incredible skincare benefits. Red sandalwood has long been used in traditional Ayurvedic practices to brighten the skin, reduce blemishes, and soothe various skin conditions. This 125g soap bar creates a rich lather, leaving your skin feeling soft, cleansed, and delicately fragranced with the earthy, woody notes of sandalwood. It's a perfect blend of ancient wisdom and natural ingredients for a truly purifying and rejuvenating bathing ritual.",
+                        price: 49.00,
+                        category: "bath",
+                        aiGenerated: true,
+                        rating: 4.7,
+                        reviews: 112,
+                        featured: false,
+                        artisan: "Rimli Std. Co."
+                    }
+                ];
+                this.filteredProducts = [...this.products];
+                this.currentFilter = 'all';
+                this.searchTerm = '';
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.renderProducts();
+                this.setupIntersectionObserver();
+                this.setupScrollEffects();
+            }
+
+            setupEventListeners() {
+                const searchInput = document.getElementById('searchInput');
+                searchInput?.addEventListener('input', this.debounce((e) => {
+                    this.searchTerm = e.target.value.toLowerCase();
+                    this.filterProducts();
+                }, 300));
+
+                const filterTabs = document.querySelectorAll('.filter-tab');
+                filterTabs.forEach(tab => {
+                    tab.addEventListener('click', (e) => {
+                        this.setActiveFilter(e.target.dataset.filter);
+                        this.updateTabStates(e.target);
+                        this.filterProducts();
+                    });
+                });
+
+                document.querySelectorAll('a[href^="#"]').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const target = document.querySelector(link.getAttribute('href'));
+                        target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    });
+                });
+
+                const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+                mobileMenuBtn?.addEventListener('click', this.toggleMobileMenu);
+
+                const contactForm = document.getElementById('contactForm');
+                contactForm?.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleContactForm(e);
+                });
+            }
+
+            setupScrollEffects() {
+                const header = document.getElementById('header');
+                window.addEventListener('scroll', () => {
+                    const currentScrollY = window.scrollY;
+                    if (currentScrollY > 100) {
+                        header?.classList.add('scrolled');
+                    } else {
+                        header?.classList.remove('scrolled');
+                    }
+                });
+            }
+
+            setupIntersectionObserver() {
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('fade-in-up');
+                        }
+                    });
+                }, observerOptions);
+
+                document.querySelectorAll('.section, .feature-card, .product-card').forEach(el => {
+                    observer.observe(el);
+                });
+            }
+
+            setActiveFilter(filter) {
+                this.currentFilter = filter;
+            }
+
+            updateTabStates(activeTab) {
+                document.querySelectorAll('.filter-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                    tab.setAttribute('aria-selected', 'false');
+                });
+                activeTab.classList.add('active');
+                activeTab.setAttribute('aria-selected', 'true');
+            }
+
+            filterProducts() {
+                this.showLoading();
+                setTimeout(() => {
+                    let filtered = [...this.products];
+                    if (this.currentFilter !== 'all') {
+                        filtered = filtered.filter(product => product.category === this.currentFilter);
+                    }
+                    if (this.searchTerm) {
+                        filtered = filtered.filter(product =>
+                            product.name.toLowerCase().includes(this.searchTerm) ||
+                            product.description.toLowerCase().includes(this.searchTerm) ||
+                            product.artisan.toLowerCase().includes(this.searchTerm)
+                        );
+                    }
+                    this.filteredProducts = filtered;
+                    this.hideLoading();
+                    this.renderProducts();
+                }, 600);
+            }
+
+            showLoading() {
+                const loadingContainer = document.getElementById('loadingContainer');
+                const productsGrid = document.getElementById('productsGrid');
+                if (loadingContainer && productsGrid) {
+                    loadingContainer.style.display = 'flex';
+                    productsGrid.style.opacity = '0.3';
+                }
+            }
+
+            hideLoading() {
+                const loadingContainer = document.getElementById('loadingContainer');
+                const productsGrid = document.getElementById('productsGrid');
+                if (loadingContainer && productsGrid) {
+                    loadingContainer.style.display = 'none';
+                    productsGrid.style.opacity = '1';
+                }
+            }
+
+            renderProducts() {
+                const grid = document.getElementById('productsGrid');
+                if (!grid) return;
+
+                if (this.filteredProducts.length === 0) {
+                    grid.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">🔍</div>
+                            <h3>No products found</h3>
+                            <p>Try adjusting your search criteria or browse different categories.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                grid.innerHTML = this.filteredProducts.map((product, index) => `
+                    <article class="product-card" data-product-id="${product.id}" style="animation-delay: ${index * 0.1}s">
+                        <div class="product-image-container">
+                            <img src="${product.image}" alt="${product.name} by ${product.artisan}" class="product-image" loading="lazy">
+                            <div class="product-badges">
+                                ${product.aiGenerated ? '<span class="product-badge badge-ai">AI Enhanced</span>' : ''}
+                                ${product.featured ? '<span class="product-badge badge-featured">Featured</span>' : ''}
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <h3 class="product-title">${product.name}</h3>
+                            <p class="product-description">${product.description}</p>
+                            <div class="product-meta">
+                                <span class="product-price">${product.price.toFixed(2)}</span>
+                                <div class="product-rating">
+                                    <span>${'⭐'.repeat(Math.floor(product.rating))}</span>
+                                    <span>${product.rating} (${product.reviews})</span>
+                                </div>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-primary btn-sm" onclick="app.addToCart(${product.id})">Add to Cart</button>
+                                <button class="btn-icon" onclick="app.toggleWishlist(${product.id})" aria-label="Add to wishlist">♡</button>
+                                <button class="btn-icon" onclick="app.viewProduct(${product.id})" aria-label="View details">👁</button>
+                            </div>
+                        </div>
+                    </article>
+                `).join('');
+                this.setupProductCardEvents();
+            }
+
+            setupProductCardEvents() {
+                document.querySelectorAll('.product-card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        if (e.target.closest('button')) return;
+                        const productId = parseInt(card.dataset.productId);
+                        this.simulateAIAnalysis(productId);
+                    });
+                });
+            }
+
+            addToCart(productId) {
+                const product = this.products.find(p => p.id === productId);
+                if (product) {
+                    this.showNotification({
+                        title: 'Added to Cart',
+                        message: `${product.name} has been added to your cart.`,
+                        type: 'success'
+                    });
+                }
+            }
+
+            toggleWishlist(productId) {
+                const product = this.products.find(p => p.id === productId);
+                if (product) {
+                    this.showNotification({
+                        title: 'Added to Wishlist',
+                        message: `${product.name} has been saved to your wishlist.`,
+                        type: 'info'
+                    });
+                }
+            }
+
+            viewProduct(productId) {
+                const product = this.products.find(p => p.id === productId);
+                if (product) {
+                    this.simulateAIAnalysis(productId);
+                }
+            }
+
+            simulateAIAnalysis(productId) {
+                const product = this.products.find(p => p.id === productId);
+                if (!product) return;
+
+                const aiFeatures = [
+                    `Analyzing color harmony for ${product.name}...`,
+                    `Generating personalized styling recommendations...`,
+                    `Calculating optimal pricing based on market trends...`,
+                    `Creating SEO-optimized product description...`,
+                    `Identifying complementary products...`,
+                    `Analyzing customer sentiment and reviews...`,
+                    `Forecasting demand for similar products...`,
+                    `Optimizing product photography suggestions...`
+                ];
+
+                const randomFeature = aiFeatures[Math.floor(Math.random() * aiFeatures.length)];
+                this.showNotification({
+                    title: '🤖 AI Analysis Active',
+                    message: randomFeature,
+                    type: 'ai',
+                    duration: 4000
+                });
+            }
+
+            handleContactForm(e) {
+                const formData = new FormData(e.target);
+                const name = formData.get('name');
+                const email = formData.get('email');
+                const message = formData.get('message');
+
+                // Simulate form submission
+                this.showNotification({
+                    title: 'Message Sent!',
+                    message: `Thank you ${name}, we'll get back to you soon!`,
+                    type: 'success'
+                });
+
+                e.target.reset();
+            }
+
+            showNotification({ title, message, type = 'info', duration = 3000 }) {
+                const notification = document.createElement('div');
+                notification.className = 'notification';
+                notification.innerHTML = `
+                    <div class="notification-header">
+                        <span class="notification-title">${title}</span>
+                    </div>
+                    <div class="notification-message">${message}</div>
+                `;
+
+                const colors = {
+                    success: 'var(--success-color)',
+                    error: 'var(--error-color)',
+                    warning: 'var(--warning-color)',
+                    ai: 'var(--accent-color)',
+                    info: 'var(--primary-color)'
+                };
+
+                notification.style.borderLeftColor = colors[type] || colors.info;
+                document.body.appendChild(notification);
+
+                setTimeout(() => notification.classList.add('show'), 100);
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => notification.remove(), 300);
+                }, duration);
+            }
+
+            toggleMobileMenu() {
+                console.log('Mobile menu toggle');
+            }
+
+            debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
+        }
+
+        // Initialize app
+        const app = new CraftConnectApp();
+
+        window.addEventListener('load', () => {
+            if ('performance' in window) {
+                const loadTime = performance.now();
+                console.log(`🚀 CraftConnect loaded in ${loadTime.toFixed(2)}ms`);
+            }
+        });
+
+        window.addEventListener('error', (e) => {
+            console.error('Application error:', e.error);
+        });
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                console.log('PWA capabilities ready');
+            });
+        }
+    </script>
+</body>
+</html>
